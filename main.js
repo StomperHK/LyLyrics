@@ -1,24 +1,16 @@
 const URL = 'https://api.lyrics.ovh/suggest/'
 
+const errorModalEL = document.querySelector('[data-js="error-modal"]')
 const mainFormEL = document.querySelector('[data-js="main-form"]')
 const searchInputEL = document.querySelector('[data-js="search-input"]')
-const resultsContainerEL = document.querySelector('[data-js="results-container"]')
+const resultsListWrapperEL = document.querySelector('[data-js="results-list-wrapper"]')
+const resultsListEL = document.querySelector('[data-js="results-list"]')
 const loadingSpinnerEL = document.querySelector('[data-js="loading-spinner"]')
 let nextSearchURL = null
 
 
 function getSearchTerm() {
   return searchInputEL.value.trim()
-}
-
-function parseResponse(response) {
-  toggleLoadingSpinner()
-
-  if (response.ok) {
-    return response.json()
-  }
-  
-  throw new Error('problema na requisição')
 }
 
 function getFormatedDuration(duration) {
@@ -78,7 +70,42 @@ function outputData(musics) {
     </li>
   `})
 
-  resultsContainerEL.innerHTML += musics.join('')
+  resultsListEL.innerHTML += musics.join('')
+}
+
+function toggleLoadingSpinner() {
+  loadingSpinnerEL.classList.toggle('loading-spinner__enabled')
+}
+
+function toggleErrorModal() {
+  errorModalEL.classList.toggle('error-modal__enabled')
+}
+
+function scheduleShowAndHideModal() {   
+  setTimeout(toggleErrorModal, 50)
+
+  setTimeout(toggleErrorModal, 3000)
+}
+
+function cleanResults() {
+  resultsListEL.innerHTML  = ''
+}
+
+function parseResponse(response) {
+  toggleLoadingSpinner()
+
+  if (response.ok) {
+    return response.json()
+  }
+  
+  switch (response.status) {
+    case 404:
+      throw new Error('conteúdo não encontrado')
+    case 500:
+      throw new Error('erro interno no servidor')
+    case 503:
+      throw new Error('serviço indisponível no momento')
+  }
 }
 
 function parseData(data) {
@@ -89,17 +116,13 @@ function parseData(data) {
 }
 
 function handleError(error) {
+  const ifMessageIsFailedToFetch = error.message === 'Failed to fetch'
+
+  errorModalEL.textContent = ifMessageIsFailedToFetch ? 'houve um erro: atualize a página e tente denovo' : error.message
+
   toggleLoadingSpinner()
 
-  console.log(error.message)
-}
-
-function toggleLoadingSpinner() {
-  loadingSpinnerEL.classList.toggle('loading-spinner__enabled')
-}
-
-function cleanResults() {
-  resultsContainerEL.innerHTML  = ''
+  scheduleShowAndHideModal()
 }
 
 function fetchSongs(searchTerm) {
@@ -121,7 +144,7 @@ function handleFormSubmit(event) {
 
   cleanResults()
 
-  // fetchSongs(searchTerm)
+  fetchSongs(searchTerm)
 }
 
 
