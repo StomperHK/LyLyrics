@@ -17,7 +17,12 @@
 
     <title>LyLyrics</title>
   </head>
+
   <body>
+    <div data-js="error-modal" class="error-modal">
+      serviço indisponível no momento
+    </div>
+
     <h1 class="main-title">LyLyrics 
       <div class="main-title--small-text">onde você encontra as letras de suas músicas</div>
     </h1>
@@ -37,7 +42,7 @@
       </form>
 
       <div>   <!-- I needed to create this div to append the loading spinner to conform with the spec -->
-        <ul data-js="results-container">
+        <ul data-js="results-list">
 
         </ul>
 
