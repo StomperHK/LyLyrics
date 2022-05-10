@@ -14,6 +14,7 @@
   --skeleton-color: rgb(203, 19, 203);
   --skeleton-color__focus: rgb(1, 40, 211);
   --content-color: white;
+  --error-modal-color: red;
 }
 
 
@@ -42,6 +43,30 @@ main {
   max-width: 1000px;
 }
 
+
+.error-modal {
+  width: 100%;
+  padding: 12px 14px 14px;
+
+  position: fixed;
+  top: 0px;
+  left: 0px;
+
+  transform: translateY(calc(-100% - 7px));
+
+  background-color: var(--error-modal-color);
+
+  font-size: 20px;
+  font-variant: small-caps;
+  font-weight: 600;
+  text-align: center;
+
+  transition: 150ms ease-in-out transform;
+
+  &__enabled {
+    transform: translateY(0px);
+  }
+}
 
 .main-title {
   margin: 30px;
@@ -179,11 +204,14 @@ main {
 
   border-radius: 50%;
 
-  animation: rotate 800ms ease-in-out infinite;
+  animation: none;
   transition: opacity 200ms 500ms linear;
 
   &__enabled {
     opacity: 1;
+
+    animation: rotate 800ms ease-in-out infinite;
+    transition: opacity 200ms 500ms linear;
   }
 }
 
