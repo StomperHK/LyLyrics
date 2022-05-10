@@ -36,9 +36,13 @@
         </div>
       </form>
 
-      <ul data-js="results-container">
+      <div>   <!-- I needed to create this div to append the loading spinner to conform with the spec -->
+        <ul data-js="results-container">
 
-      </ul>
+        </ul>
+
+        <div data-js="loading-spinner" class="loading-spinner"></div>
+      </div>
     </main>
 
     <script src="main.js" defer></script>
