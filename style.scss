@@ -48,6 +48,7 @@ main {
 
   font-size: 48px;
   text-align: center;
+  letter-spacing: 2px;
 
   &--small-text {
     font-size: 18px;
@@ -55,8 +56,6 @@ main {
 }
 
 .tridimensional-button-wrapper {
-  display: inline-block;
-
   position: relative;
 
   &--button {
@@ -71,14 +70,14 @@ main {
     border-radius: 4px;
 
     font-variant-caps: small-caps;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 600;
 
     transition: transform 150ms ease-in;
   }
 
   &--button:active {
-    transform: translateY(5px)
+    transform: translateY(6px)
   }
 
   &--shadow {
@@ -93,7 +92,7 @@ main {
 
     border-radius: 4px;
 
-    transform: translateY(5px);
+    transform: translateY(6px);
   }
 }
 
@@ -115,7 +114,7 @@ main {
   &--input {
     outline: none;
     border: 2px solid var(--skeleton-color);
-    padding: 12px 8px;
+    padding: 13px 8px;
     width: 100%;
     background-color: var(--background-color);
 
@@ -150,13 +149,13 @@ main {
     }
 
     &--button:active {
-      transform: translateY(3px)
+      transform: translateY(4px)
     }
 
     &--shadow {
       border-radius: 0px 4px 4px 0px;
 
-      transform: translateY(3px)
+      transform: translateY(4px)
     }
   }
 
@@ -168,8 +167,28 @@ main {
   }
 }
 
-.lyrics-card {
-  margin: 30px 0px;
+.loading-spinner {
+  margin: 50px auto;
+  border: 4px solid var(--skeleton-color);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  width: 40px;
+  height: 40px;
+
+  opacity: 0;
+
+  border-radius: 50%;
+
+  animation: rotate 800ms ease-in-out infinite;
+  transition: opacity 200ms 500ms linear;
+
+  &__enabled {
+    opacity: 1;
+  }
+}
+
+.music-card {
+  margin: 24px 0px;
   border: 2px solid var(--skeleton-color);
   padding: 12px;
 
@@ -190,21 +209,41 @@ main {
     grid-template-columns: 180px auto;
   }
 
-  &--main-wrapper {
+  &--main-flex-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
     padding-left: 10px;
+
+    position: relative;
   }
 
   &--music-name {
-    margin-bottom: 12px;
+    margin: 0px 100px 12px 0px;
   }
 
   &--flex-wrapper {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
   }
 
   &--flex-wrapper:nth-child(2) {
     margin-bottom: 6px;
+  }
+
+  &--flex-wrapper-duration {
+    display: inline-flex;
+
+    padding: 4px;
+
+    position: absolute;
+    top: 4px;
+    right: 4px;
+
+    background-color: var(--skeleton-color);
+
+    border-radius: 4px;
   }
 
   &--svg {
@@ -215,5 +254,24 @@ main {
     height: 24px;
 
     fill: var(--content-color);
+  }
+
+  .tridimensional-button-wrapper {
+    align-self: center;
+
+    margin-top: 30px;
+
+    transform: translateY(-6px);
+
+    &--button {
+      padding: 5px 14px;
+    }
+  }
+}
+
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg)
   }
 }
